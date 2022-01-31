@@ -19,6 +19,8 @@ import * as tc from "@actions/tool-cache";
     var api_url = `https://${env}.api.stepsecurity.io/v1`;
     var web_url = "https://app.stepsecurity.io";
 
+    let token = core.getInput('token');
+    let auth = `token ${token}`;
     let _http = new httpm.HttpClient();
     _http.requestOptions = { socketTimeout: 3 * 1000 };
     try {
@@ -54,7 +56,7 @@ import * as tc from "@actions/tool-cache";
     cp.execSync("sudo chown -R $USER /home/agent");
 
     const downloadPath: string = await tc.downloadTool(
-      "https://github.com/step-security/agent/releases/download/v0.8.6/agent_0.8.6_linux_amd64.tar.gz"
+      "https://github.com/step-security/agent/releases/download/v0.8.6/agent_0.8.6_linux_amd64.tar.gz", undefined, auth
     );
     const extractPath = await tc.extractTar(downloadPath);
 
